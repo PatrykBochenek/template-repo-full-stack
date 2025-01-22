@@ -1,4 +1,5 @@
 import { PlusCircle, ChevronRight, Calendar, Users, Search } from 'lucide-react';
+import Link from 'next/link';
 
 async function getData() {
   const response = await fetch('http://127.0.0.1:8000/clients');
@@ -32,32 +33,35 @@ export default async function ClientDashboard() {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {clients.map((client) => (
-          <div
+          <Link
             key={client.id}
-            className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow cursor-pointer p-4"
+            href={`/clients/accounting-period/${client.id}`}
+            className="block"
           >
-            <div className="flex items-center justify-between pb-2">
-              <h2 className="text-xl font-bold">{client.code}</h2>
-              <ChevronRight className="text-gray-400" />
-            </div>
-            <div>
-              {client.name && (
-                <p className="text-sm text-gray-500 mb-4">{client.name}</p>
-              )}
-              <div className="flex items-center justify-between text-sm">
-                <div className="flex items-center gap-2">
-                  <Calendar size={16} className="text-blue-500" />
-                  <span>
-                    {client.accounting_periods?.length || 0} Periods
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Users size={16} className="text-green-500" />
-                  <span>Active</span>
+            <div className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow cursor-pointer p-4">
+              <div className="flex items-center justify-between pb-2">
+                <h2 className="text-xl font-bold">{client.code}</h2>
+                <ChevronRight className="text-gray-400" />
+              </div>
+              <div>
+                {client.name && (
+                  <p className="text-sm text-gray-500 mb-4">{client.name}</p>
+                )}
+                <div className="flex items-center justify-between text-sm">
+                  <div className="flex items-center gap-2">
+                    <Calendar size={16} className="text-blue-500" />
+                    <span>
+                      {client.accounting_periods?.length || 0} Periods
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Users size={16} className="text-green-500" />
+                    <span>Active</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
