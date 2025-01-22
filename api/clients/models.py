@@ -3,11 +3,11 @@ from django.core.exceptions import ValidationError
 
 class Client(models.Model):
     code = models.CharField(max_length=255, unique=True)
-    name = models.CharField(max_length=255)
-    email = models.EmailField()
-    phone = models.CharField(max_length=20)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    name = models.CharField(max_length=255, null=True)
+    email = models.EmailField(null=True)
+    phone = models.CharField(max_length=20, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
     is_active = models.BooleanField(default=True)
 
     class Meta:
@@ -38,7 +38,8 @@ class AccountingPeriod(models.Model):
     client = models.ForeignKey(
         Client, 
         on_delete=models.CASCADE,
-        related_name='accounting_periods'
+        related_name='accounting_periods',
+        null=True
     )
     status = models.CharField(
         max_length=20,
