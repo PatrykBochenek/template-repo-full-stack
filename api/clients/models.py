@@ -51,3 +51,18 @@ class AccountingPeriod(models.Model):
         default='DRAFT'
     )
     notes = models.TextField(blank=True)
+
+    def clean(self):
+        if self.start_date > self.end_date:
+            raise ValidationError("Start date cannot be greater than end date")
+        overlapping = AccountingPeriod.objects.filter(
+            client=self.client,
+            start_date__lte=self.end_date,
+            end_date__gte=self.start_date
+        ).exclude(id=self.id)
+        if overlapping.exists():
+            raise ValidationError("Accounting period overlaps with existing period")
+        
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
