@@ -45,6 +45,12 @@ export default async function Page({params}) {
                                 <span>End: {new Date(period.end_date).toLocaleDateString()}</span>
                             </div>
                         </div>
+                        <div className="flex mt-3 items-center gap-2 text-sm text-gray-500 mb-2">
+                            <span>Status: {period.status}</span>
+                        </div>
+                        <div className="flex mt-3 items-center gap-2 text-sm text-gray-500 mb-2">
+                            <span>Bookkeeping Software: {period.bookkeeping_system}</span>
+                        </div>
                     </div>
                 ))}
             </div>
