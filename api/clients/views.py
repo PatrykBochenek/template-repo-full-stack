@@ -33,11 +33,20 @@ def get_client_account_periods(
             client_id,
             status=status
         )
-        data = list(account_periods.values())
+        
+        serialized_periods = []
+        for period in account_periods:
+            serialized_periods.append({
+                'id': period.id,
+                'start_date': period.start_date,
+                'end_date': period.end_date,
+                'status': period.status,
+                'bookkeeping_system': period.bookkeeping_system,
+            })
         
         return JsonResponse({
             "status": "success",
-            "data": data
+            "data": serialized_periods
         })
     except Client.DoesNotExist:
         return JsonResponse(
