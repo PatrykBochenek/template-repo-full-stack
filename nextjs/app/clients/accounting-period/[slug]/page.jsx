@@ -17,17 +17,6 @@ export default async function Page({params}) {
                 </Link>
             </div>
 
-            <div className="bg-white rounded-lg shadow-sm mb-6 p-6">
-                <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                    <input
-                        type="text"
-                        placeholder="Search periods..."
-                        className="pl-10 w-full border border-gray-200 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                </div>
-            </div>
-
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {data.map((period) => (
                     <div key={period.id} className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow p-4">
