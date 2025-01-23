@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, use } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function CreateAccountingPeriod({ params }) {
     const router = useRouter();
-    const { slug } = params;
+    const { slug } = use(params);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
     
