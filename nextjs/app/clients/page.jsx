@@ -14,10 +14,10 @@ export default async function ClientDashboard() {
     <div className="p-6 max-w-6xl mx-auto">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-800">Client Dashboard</h1>
-        <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+        <Link href={`/clients/create`} className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
           <PlusCircle size={20} />
           Add Client
-        </button>
+        </Link>
       </div>
 
       <div className="bg-white rounded-lg shadow-sm mb-6 p-6">
