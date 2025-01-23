@@ -1,4 +1,4 @@
-import { Calendar, Search, ArrowLeft } from 'lucide-react';
+import { Calendar, Search, ArrowLeft, PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function Page({params}) {
@@ -10,12 +10,11 @@ export default async function Page({params}) {
     return (
         <div className="p-6 max-w-6xl mx-auto">
             <div className="flex justify-between items-center mb-8">
-                <div className="flex items-center gap-4">
-                    <Link href="/clients" className="text-gray-500 hover:text-gray-700">
-                        <ArrowLeft size={24} />
-                    </Link>
-                    <h1 className="text-3xl font-bold text-gray-800">Accounting Periods</h1>
-                </div>
+                <h1 className="text-3xl font-bold text-gray-800">Client Dashboard</h1>
+                <Link href={`/clients/accounting-period/${slug}/create`} className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                <PlusCircle size={20} />
+                Add Accounting Period
+                </Link>
             </div>
 
             <div className="bg-white rounded-lg shadow-sm mb-6 p-6">
