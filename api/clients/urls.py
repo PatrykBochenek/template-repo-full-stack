@@ -10,4 +10,9 @@ urlpatterns = [
         views.get_client_account_periods,
         name="client.account-periods"
     ),
+    path(
+        "accounting-periods/create/",
+        views.create_accounting_period,
+        name="accounting-periods.create"
+    ),
 ]

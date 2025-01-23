@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpRequest, HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.core.exceptions import ValidationError
 from . import services
-from .models import Client
+from .models import Client, AccountingPeriod
 from django.views.decorators.csrf import csrf_exempt
 import json
 
@@ -109,6 +109,69 @@ def create_client(request: HttpRequest) -> JsonResponse:
     except ValidationError as e:
         return JsonResponse(
             {"status": "error", "message": str(e)},
+            status=400
+        )
+    except Exception as e:
+        return JsonResponse(
+            {"status": "error", "message": str(e)},
+            status=500
+        )
+    
+@csrf_exempt  # Only for development
+@require_http_methods(["POST"])
+def create_accounting_period(request: HttpRequest) -> JsonResponse:
+    try:
+        data = json.loads(request.body)
+        
+        required_fields = ['start_date', 'end_date', 'client']
+        for field in required_fields:
+            if not data.get(field):
+                return JsonResponse(
+                    {"status": "error", "message": f"{field} is required"},
+                    status=400
+                )
+
+        try:
+            client = Client.objects.get(id=data['client'])
+        except Client.DoesNotExist:
+            return JsonResponse(
+                {"status": "error", "message": "Client not found"},
+                status=404
+            )
+        
+        period = AccountingPeriod(
+            start_date=data['start_date'],
+            end_date=data['end_date'],
+            bookkeeping_system=data.get('bookkeeping_system', 'QB'),
+            status=data.get('status', 'DRAFT'),
+            notes=data.get('notes', ''),
+            client=client
+        )
+        
+        try:
+            period.save()
+        except ValidationError as e:
+            return JsonResponse(
+                {"status": "error", "message": str(e)},
+                status=400
+            )
+        
+        return JsonResponse({
+            "status": "success",
+            "data": {
+                "id": period.id,
+                "start_date": period.start_date,
+                "end_date": period.end_date,
+                "bookkeeping_system": period.bookkeeping_system,
+                "status": period.status,
+                "notes": period.notes,
+                "client_id": period.client.id
+            }
+        }, status=201)
+        
+    except json.JSONDecodeError:
+        return JsonResponse(
+            {"status": "error", "message": "Invalid JSON data"},
             status=400
         )
     except Exception as e:
