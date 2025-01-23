@@ -49,12 +49,6 @@ export default async function ClientDashboard() {
                 )}
                 <div className="flex items-center justify-between text-sm">
                   <div className="flex items-center gap-2">
-                    <Calendar size={16} className="text-blue-500" />
-                    <span>
-                      {client.accounting_periods?.length || 0} Periods
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
                     <Users size={16} className="text-green-500" />
                     <span>Active</span>
                   </div>
